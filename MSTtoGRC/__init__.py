@@ -1,1 +1,1 @@
-from MSTtoGRC.MSTtoGRC import mst_to_grc
+from .MSTtoGRC import mst_to_grc

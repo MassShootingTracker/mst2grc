@@ -19,5 +19,11 @@ def update_grc():
 
     return "Done."
 
+
+@app.route('/')
+def hello():
+    return "I'm alive!"
+
+
 if __name__ == "__main__":
     app.run(debug=True)

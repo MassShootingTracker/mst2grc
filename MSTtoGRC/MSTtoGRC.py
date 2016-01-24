@@ -3,11 +3,7 @@ import datetime
 import re
 import praw
 import praw.errors
-try:
-    from MSTtoGRC.objects import Config, MSTYear, WikiYear
-except ImportError:
-    # noinspection PyUnresolvedReferences
-    from objects import Config, MSTYear, WikiYear
+from .objects import Config, MSTYear, WikiYear
 
 
 def mst_to_grc(update_year="all", cfg_file=None):
