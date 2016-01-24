@@ -1,0 +1,43 @@
+{
+  "app": {
+    "subreddit": "your subreddit"
+  },
+
+  "authentication": {
+    "client_id"     : "your client id",
+    "client_secret" : "your client secret",
+    "refresh_token" : "your refresh token",
+    "scope"         : "identity wikiedit wikiread modconfig",
+    "redirect_uri"  : "http://127.0.0.1:65010/authorize_callback"
+  },
+
+  "praw": {
+    "api_request_delay": 1.0
+  },
+
+  "google_docs": {
+    "2013": "2013 google doc url",
+    "2014": "2014 google doc url",
+    "2015": "2015 google doc url",
+    "2016": "2016 google doc url"
+  },
+
+  "wiki_pages": {
+    "2013": "2013massshootings",
+    "2014": "2014massshootings",
+    "2015": "2015massshootings",
+    "2016": "2016massshootings"
+  },
+
+  "sidebar": {
+    "total_pattern": "(?<=\\[)[0-9]+(?=\\]\\(http://massshootingtracker.org#MSTT\\))",
+    "current_year_pattern": "(?<=\\[)[0-9]+(?=\\]\\(http://massshootingtracker.org#MSTCY\\))",
+    "days_since_pattern" : "(?<=\\[)[0-9]+(?=\\]\\(http://massshootingtracker.org#MSTDSLS\\))"
+  },
+
+  "formatting": {
+    "title_md": "##Number {number}: {date}, {shooters}, {killed} dead {wounded} injured, {city}, {state}\n\n",
+    "url_md": "* {url}\n"
+  }
+}
+
