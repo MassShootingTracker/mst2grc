@@ -43,11 +43,7 @@ def mst_to_grc(update_year="all", cfg_file=None):
     sidebar = re.sub(cfg.current_year_pattern, str(mst[current_year].total), sidebar)
     sidebar = re.sub(cfg.days_since_pattern, str(mst[current_year].days_since_last), sidebar)
 
-    try:
-        r.update_settings(r.get_subreddit(cfg.subreddit), description=sidebar,
-                          text='Failed Captcha Test', raise_captcha_exception=True)
-    except praw.errors.InvalidCaptcha:
-        pass
+    r.edit_wiki_page(r.get_subreddit(cfg.subreddit), "config/sidebar", sidebar, reason="Update from MST")
 
 if __name__ == "__main__":
     print(mst_to_grc())
