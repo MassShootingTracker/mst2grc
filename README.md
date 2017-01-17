@@ -14,13 +14,13 @@ The script looks for config.json in the root directory.   You can change the loc
 
 ### 2. Run in Dev Mode
 
-You can either run wsgi.py which starts a local webserver at `http://127.0.0.1:5000` or run MSTtoGRC directly.  
+You can either run wsgi.py which starts a local webserver at `http://127.0.0.1:5000` or run mst2grc directly.  
 
 ### 3. Run in production
 
-This requires a webserver with a properly configured wsgi module, such as mod_wsgi/Apachi or uwsgi/nginx. The setup of these are beyond the scope of these instructions. 
+This requires a webserver with a properly configured wsgi module, such as mod_wsgi/Apachi or gunicorn/nginx. The setup of these are beyond the scope of these instructions. 
 
-A sample flask wsgi script can be found in wsgi.py.
+A sample bottle wsgi script can be found in wsgi.py.
  
 ### 4. Navigate to endpoint and refresh from google docs. 
 
