@@ -1,29 +1,36 @@
 import os
+import json
+
+import bottle
+from bottle import request, route, run
+
 from MSTtoGRC import mst_to_grc
 
-from flask import Flask, request
-app = Flask('__name__')
-
-
-@app.route("/update/grc", methods=['GET', 'POST'])
+@route("/grcupdate", method=['get', 'post'])
 def update_grc():
-    year = request.args.get('year', 'all')
-    api_key = request.args.get('key', '')
-
-    if api_key != os.environ['MSTGRC_KEY'] if 'MSTGRC_KEY' in os.environ else '':
-        return "Unrecognized API key."
+    year = request.params.get('year', 'all')
+    api_key = request.params.get('key')
 
     cfg_file = os.environ['MSTGRC_CFG'] if 'MSTGRC_CFG' in os.environ else 'config.json'
 
+    with open(cfg_file) as fp:
+        config = json.load(fp)
+
+    if api_key != config['app']['key']:
+        return json.dumps({'status': 'error', 'msg': "Unrecognized API key."})
+
+
     mst_to_grc(year, cfg_file)
 
-    return "Done."
+    return json.dumps({'status': 'ok', 'msg': 'Update complete.'})
 
 
-@app.route('/')
+@route('/')
 def hello():
-    return "I'm alive!"
+    return json.dumps({'status': 'ok', 'msg': 'I\'m alive.'})
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+app = bottle.default_app()

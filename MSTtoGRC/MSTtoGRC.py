@@ -2,7 +2,6 @@ import os
 import datetime
 import re
 import praw
-import praw.errors
 from .objects import Config, MSTYear, WikiYear
 
 
@@ -25,25 +24,27 @@ def mst_to_grc(update_year="all", cfg_file=None):
     # Load markdown for years
     update_years = [y for y in cfg.wiki_pages] if update_year == 'all' else [update_year]
 
-    r = praw.Reddit(cfg.useragent)
-    r.config.api_request_delay = cfg.api_request_delay
-    r.set_oauth_app_info(cfg.client_id, cfg.client_secret, cfg.redirect_uri)
-    r.refresh_access_information(cfg.refresh_token)
+    r = praw.Reddit(client_id = cfg.client_id,
+                    client_secret = cfg.client_secret,
+                    refresh_token = cfg.refresh_token,
+                    user_agent = cfg.useragent)
 
     for year in update_years:
-        wiki = r.get_wiki_page(cfg.subreddit, cfg.wiki_pages[year])
+        wiki = r.subreddit(cfg.subreddit).wiki[cfg.wiki_pages[year]]
         new_wiki = WikiYear(wiki.content_md, mst[year].list_md)
-        r.edit_wiki_page(cfg.subreddit, cfg.wiki_pages[year], new_wiki.content_md, reason="Update from MST")
+        wiki.edit(new_wiki.content_md, reason="Update from MST")
 
     # Update Sidebar
     total_shootings = sum(mst[y].total for y in mst)
 
-    sidebar = r.get_settings(cfg.subreddit)['description']
-    sidebar = re.sub(cfg.total_pattern, str(total_shootings), sidebar)
-    sidebar = re.sub(cfg.current_year_pattern, str(mst[current_year].total), sidebar)
-    sidebar = re.sub(cfg.days_since_pattern, str(mst[current_year].days_since_last), sidebar)
+    sidebar = r.subreddit(cfg.subreddit).wiki['config/sidebar']
 
-    r.edit_wiki_page(r.get_subreddit(cfg.subreddit), "config/sidebar", sidebar, reason="Update from MST")
+    sidebar_md = sidebar.content_md
+    sidebar_md = re.sub(cfg.total_pattern, str(total_shootings), sidebar_md)
+    sidebar_md = re.sub(cfg.current_year_pattern, str(mst[current_year].total), sidebar_md)
+    sidebar_md = re.sub(cfg.days_since_pattern, str(mst[current_year].days_since_last), sidebar_md)
+
+    sidebar.edit(sidebar_md, reason="Update from MST")
 
 if __name__ == "__main__":
     print(mst_to_grc())

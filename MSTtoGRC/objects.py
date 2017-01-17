@@ -159,3 +159,4 @@ class WikiYear(object):
 
     def __str__(self):
         return self.content_md
+
