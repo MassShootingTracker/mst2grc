@@ -4,7 +4,7 @@ import json
 import bottle
 from bottle import request, route, run
 
-from MSTtoGRC import mst_to_grc
+from mst2grc import mst_to_grc
 
 @route("/grcupdate", method=['get', 'post'])
 def update_grc():
