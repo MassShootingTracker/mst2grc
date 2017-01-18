@@ -1,0 +1,11 @@
+mst2grc:
+    image: mstracker/mst2grc
+    ports:
+        - "5000:5000"
+    environment:
+        - GUNICORN_BIND=0.0.0.0:5000
+        - GUNICORN_WORKERS=1
+    restart: always
+    volumes: 
+        - ./config.json:/src/config.json
+

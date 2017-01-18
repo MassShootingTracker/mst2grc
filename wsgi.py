@@ -1,3 +1,4 @@
+import logging
 import os
 import json
 
@@ -5,6 +6,7 @@ import bottle
 from bottle import request, route, run
 
 from mst2grc import mst_to_grc
+
 
 @route("/grcupdate", method=['get', 'post'])
 def update_grc():
@@ -31,6 +33,6 @@ def hello():
 
 
 if __name__ == "__main__":
-    run(host='localhost', port='5000')
+    run(host='localhost', port='5000', server='gunicorn', debug=True)
 
 app = bottle.default_app()
